@@ -82,9 +82,11 @@ jobs:
       - name: "Create custom headers"
         run: |
           cd "build/WebGL/WebGL"
-          cat <<EOT >> _headers
+          sudo tee -a _headers > /dev/null <<EOT
           *.js.br
             Content-Type: application/javascript
+          *.wasm.br
+            Content-Type: application/wasm
           EOT
 
       # Output
