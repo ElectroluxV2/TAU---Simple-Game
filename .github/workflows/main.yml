@@ -77,6 +77,16 @@ jobs:
         with:
           targetPlatform: WebGL
 
+      # Add starnge Unity content types
+      # https://docs.unity3d.com/Manual/webgl-server-configuration-code-samples.html
+      - name: "Create custom headers"
+        run: |
+          cd "build/WebGL/WebGL"
+          cat <<EOT >> _headers
+          *.js.br
+            Content-Type: application/javascript
+          EOT
+
       # Output
       - uses: actions/upload-artifact@v4
         with:
