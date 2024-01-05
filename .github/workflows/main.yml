@@ -80,16 +80,19 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: Build
+          path: "build"
+
+      # Deploy
+      - uses: actions/upload-pages-artifact@v3
+        if: github.ref == 'refs/heads/main'
+        with:
           path: "build/WebGL/WebGL"
 
       - name: Setup Pages
         if: github.ref == 'refs/heads/main'
         uses: actions/configure-pages@v4
 
-      # Deploy
       - name: Deploy to GitHub Pages
         if: github.ref == 'refs/heads/main'
         id: deployment
         uses: actions/deploy-pages@v4
-        with:
-          artifact_name: "Build"
