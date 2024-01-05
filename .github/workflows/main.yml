@@ -82,6 +82,10 @@ jobs:
           name: Build
           path: "build/WebGL/WebGL"
 
+      - name: Setup Pages
+        if: github.ref == 'refs/heads/main'
+        uses: actions/configure-pages@v4
+
       # Deploy
       - name: Deploy to GitHub Pages
         if: github.ref == 'refs/heads/main'
