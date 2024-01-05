@@ -83,9 +83,9 @@ jobs:
         run: |
           cd "build/WebGL/WebGL"
           sudo tee -a _headers > /dev/null <<EOT
-          *.js.br
+          /*.js.br
             Content-Type: application/javascript
-          *.wasm.br
+          /*.wasm.br
             Content-Type: application/wasm
           EOT
 
