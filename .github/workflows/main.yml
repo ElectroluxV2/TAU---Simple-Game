@@ -44,9 +44,16 @@ jobs:
         
       - name: Build
         run: dotnet build "TestsCore/Tests/Tests.csproj"
-        
-      - name: Test with the dotnet CLI
-        run: dotnet test "TestsCore/Tests/Tests.csproj"
+
+      - name: 'Test'
+        run: 'dotnet test --logger trx --no-build --verbosity normal "TestsCore/Tests/Tests.csproj"'
+
+      - name: 'Publish Test Results'
+        uses: 'EnricoMi/publish-unit-test-result-action@v2'
+        if: always()
+        with:
+          files: |
+            TestsCore/**/*.trx
 
       # Cache
       - uses: actions/cache@v3
