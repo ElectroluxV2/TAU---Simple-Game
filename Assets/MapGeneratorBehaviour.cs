@@ -16,7 +16,7 @@ public enum CellContents
     Stop,
 }
 
-class MapCell
+public class MapCell
 {
     public CellType Type { get; set; }
     public CellContents Contents { get; set; }
@@ -35,7 +35,52 @@ class MapCell
     public bool IsEmptyCell => Contents == CellContents.Empty;
 }
 
-public class MapGenerator : MonoBehaviour
+public class MapGenerator
+{
+    private static readonly Random Random = new();
+
+    private static bool IsMapBorder(int x, int y, int mapSizeX, int mapSizeY) => x == 0 || y == 0 || x == mapSizeX - 1 || y == mapSizeY - 1;
+    public CartesianMap<MapCell> Generate(int mapSizeX, int mapSizeY)
+    {
+        var cartesianMap = new CartesianMap<MapCell>(mapSizeX, mapSizeY);
+        
+        // Generate border during instantiation
+        cartesianMap.Instantiate((x, y) => IsMapBorder(x, y, mapSizeX, mapSizeY)
+            ? new MapCell(CellType.Wall, CellContents.Empty)
+            : new MapCell(CellType.Floor, CellContents.Empty)
+        );
+        
+        // Generate random walls within border constrained box
+        foreach (var cell in cartesianMap)
+        {
+            if (!cell.IsFloor || !cell.IsEmptyCell || !(Random.NextDouble() > 0.70)) continue;
+            
+            cell.Type = CellType.Wall;
+        }
+
+        // Generate start
+        foreach (var cell in cartesianMap)
+        {
+            if (!cell.IsFloor || !cell.IsEmptyCell) continue;
+            
+            cell.Contents = CellContents.Start;
+            break;
+        }
+        
+        // Generate stop
+        foreach (var cell in cartesianMap.GetReverseEnumerator())
+        {
+            if (!cell.IsFloor || !cell.IsEmptyCell) continue;
+            
+            cell.Contents = CellContents.Stop;
+            break;
+        }
+
+        return cartesianMap;
+    }
+}
+
+public class MapGeneratorBehaviour : MonoBehaviour
 {
     public GameObject[] obstaclePrefabs;
     public GameObject playerPrefab;
@@ -44,7 +89,6 @@ public class MapGenerator : MonoBehaviour
     public int mapSizeX;
     public int mapSizeY;
     public int gridSize;
-    private static readonly Random Random = new();
 
     private bool _isStartPlaced;
     private bool _isStopPlaced;
@@ -55,39 +99,7 @@ public class MapGenerator : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        _cartesianMap = new CartesianMap<MapCell>(mapSizeX, mapSizeY);
-
-        // Generate border during instantiation
-        _cartesianMap.Instantiate((x, y) => IsMapBorder(x, y)
-            ? new MapCell(CellType.Wall, CellContents.Empty)
-            : new MapCell(CellType.Floor, CellContents.Empty)
-        );
-        
-        // Generate random walls within border constrained box
-        foreach (var cell in _cartesianMap)
-        {
-            if (!cell.IsFloor || !cell.IsEmptyCell || !(Random.NextDouble() > 0.70)) continue;
-            
-            cell.Type = CellType.Wall;
-        }
-
-        // Generate start
-        foreach (var cell in _cartesianMap)
-        {
-            if (!cell.IsFloor || !cell.IsEmptyCell) continue;
-            
-            cell.Contents = CellContents.Start;
-            break;
-        }
-        
-        // Generate stop
-        foreach (var cell in _cartesianMap.GetReverseEnumerator())
-        {
-            if (!cell.IsFloor || !cell.IsEmptyCell) continue;
-            
-            cell.Contents = CellContents.Stop;
-            break;
-        }
+        _cartesianMap = new MapGenerator().Generate(mapSizeX, mapSizeY);
         
         // Instantiate prefabs for generated map
         foreach (var (x, y, cell) in _cartesianMap.Enumerate())
@@ -127,6 +139,4 @@ public class MapGenerator : MonoBehaviour
         // ReSharper restore PossibleLossOfFraction
         minimapCam.orthographicSize = mapSizeX * 4.83f + 33.4f;
     }
-
-    private bool IsMapBorder(int x, int y) => x == 0 || y == 0 || x == mapSizeX - 1 || y == mapSizeY - 1;
 }
