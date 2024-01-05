@@ -85,8 +85,10 @@ jobs:
           sudo tee -a _headers > /dev/null <<EOT
           /*.js.br
             Content-Type: application/javascript
+            Content-Encoding: br
           /*.wasm.br
             Content-Type: application/wasm
+            Content-Encoding: br
           EOT
 
       # Output
