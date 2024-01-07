@@ -77,38 +77,11 @@ jobs:
         with:
           targetPlatform: WebGL
 
-      # Add starnge Unity content types
-      # https://docs.unity3d.com/Manual/webgl-server-configuration-code-samples.html
-      - name: "Create custom headers"
-        run: |
-          cd "build/WebGL/WebGL"
-          sudo tee -a _headers > /dev/null <<EOT
-          /*.js.br
-            Content-Type: application/javascript
-            Content-Encoding: br
-          /*.wasm.br
-            Content-Type: application/wasm
-            Content-Encoding: br
-          EOT
-
       # Output
       - uses: actions/upload-artifact@v4
         with:
           name: Build
           path: "build"
-
-      # Deploy
-      #- name: Publish to Cloudflare Pages
-      #  uses: cloudflare/pages-action@v1
-      #  with:
-      #    apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      #    accountId: "28cc668bf6c1e5f418e20d406e04b023"
-      #    projectName: "tau-simple-game"
-      #    directory: "build/WebGL/WebGL"
-      #    # Optional: Enable this if you want to have GitHub Deployments triggered
-      #    gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-      #    # Optional: Change the Wrangler version, allows you to point to a specific version or a tag such as `beta`
-      #    wranglerVersion: '3'
       
       - uses: actions/upload-pages-artifact@v3
         if: github.ref == 'refs/heads/main'
