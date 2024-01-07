@@ -420,7 +420,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 868773943}
-  - component: {fileID: 868773942}
+  - component: {fileID: 868773944}
   m_Layer: 0
   m_Name: _MapGenerator
   m_TagString: Untagged
@@ -428,29 +428,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &868773942
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 868773941}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2007693331c5db44985b3ea47dd2a5bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObstaclePrefabs:
-  - {fileID: 5044747084837074420, guid: 1260b025e20a42a4188d7af5a454c993, type: 3}
-  - {fileID: 5575393962862629836, guid: 5f43682b7de11754b84f832cb3e258ba, type: 3}
-  - {fileID: 6735667824971967978, guid: 429a0720a9a255443928691bb98d1e3d, type: 3}
-  - {fileID: 6735667824971967978, guid: add1b49397c44ae4fb4d6bd1e63c1612, type: 3}
-  playerPrefab: {fileID: 4721138687357130474, guid: 6442230c1d65f004aad88c155f758e4c,
-    type: 3}
-  MinimapCam: {fileID: 1770826944}
-  MapSizeX: 50
-  MapSizeY: 50
-  GridSize: 10
 --- !u!4 &868773943
 Transform:
   m_ObjectHideFlags: 0
@@ -466,6 +443,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &868773944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 868773941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9d67d5b58a85d74c8fab6079d75cc2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstaclePrefabs:
+  - {fileID: 5044747084837074420, guid: 1260b025e20a42a4188d7af5a454c993, type: 3}
+  - {fileID: 5575393962862629836, guid: 5f43682b7de11754b84f832cb3e258ba, type: 3}
+  - {fileID: 6735667824971967978, guid: 429a0720a9a255443928691bb98d1e3d, type: 3}
+  - {fileID: 6735667824971967978, guid: add1b49397c44ae4fb4d6bd1e63c1612, type: 3}
+  playerPrefab: {fileID: 4721138687357130474, guid: 6442230c1d65f004aad88c155f758e4c,
+    type: 3}
+  minimapCam: {fileID: 1770826944}
+  mapSizeX: 50
+  mapSizeY: 50
+  gridSize: 10
 --- !u!1 &1682074679
 GameObject:
   m_ObjectHideFlags: 0

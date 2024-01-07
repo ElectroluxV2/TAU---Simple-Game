@@ -32,6 +32,7 @@ public class MapCell
     public bool IsEmptyCell => Contents == CellContents.Empty;
 }
 
+[System.Serializable]
 public class MapGenerator
 {
     private static readonly Random Random = new();
